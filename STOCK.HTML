@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Data</title>
+  <style>
+    body {
+      background-color: rgb(196, 229, 240); /* Light blue background */
+      display: flex; /* Flexbox layout */
+      align-items: center; /* Center content vertically */
+      justify-content: center; /* Center content horizontally */
+      min-height: 100vh; /* Set minimum viewport height */
+      margin: 0; /* Remove default margin */
+      font-family: sans-serif; /* Default font */
+    }
+
+    h1 {
+      font-weight: bold; /* Bold font for company name */
+      font-size: 20px; /* Larger font size for company name */
+      position: absolute; /* Absolute positioning for top-left */
+      top: 20px; /* Set top position */
+      right: 20px; /* Set left position */
+    }
+
+    .company-name {
+      font-weight: bold; /* Bold font for company name */
+      font-size: 20px; /* Larger font size for company name */
+      position: absolute; /* Absolute positioning for top-left */
+      top: 20px; /* Set top position */
+      left: 10px; /* Set left position */
+    }
+
+    form {
+      margin: 10px; /* Add margin between forms */
+      padding: 50px; /* Add padding within forms */
+      border: 2px solid #0f0f0f; /* Add a thin border */
+      border-radius: 5px; /* Add rounded corners */
+    }
+
+    label {
+      display: block; /* Display labels on separate lines */
+      margin-bottom: 5px; /* Add space between labels and inputs */
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="email"] {
+      width: 100%; /* Set input width to 100% */
+      padding: 5px; /* Add padding to inputs */
+      border: 1px solid #ccc; /* Add a thin border */
+      border-radius: 3px; /* Add rounded corners */
+    }
+
+    button {
+      background-color: #4CAF50; /* Green button color */
+      color: white; /* White button text */
+      padding: 10px 20px; /* Add padding to buttons */
+      border: none; /* Remove button border */
+      border-radius: 5px; /* Add rounded corners */
+      cursor: pointer; /* Set cursor to pointer on hover */
+    }
+  </style>
+</head>
+<body>
+  <div class="company-name">AMISCO</div> 
+  <h1>D</h1>
+
+  <div id="form-container"> 
+    <form name="submit-to-google-sheet">
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" required><br><br>
+
+      <label for="buyer_name">COMPANY NAME:</label>
+      <input type="text" id="company_name" name="company_name" required><br><br>
+
+      <label for="dc_no">DC No.:</label>
+      <input type="text" id="dc_no" name="dc_no" required><br><br>
+
+      <label for="item_name">Item Name:</label>
+      <input type="text" id="item_name" name="item_name" required><br><br>
+
+      <label for="qty">QTY:</label>
+      <input type="number" id="qty" name="qty" required><br><br>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div id="message" style="display: none;">
+    <p>Data saved successfully!</p>
+  </div>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzoau0la5Ou7HSZX7roMZzpNhqAB2GAnnMXms_HmL_hO1cZk9KB0eOjd7ZROgL9CfTG/exec';
+    const form = document.forms['submit-to-google-sheet'];
+    const formContainer = document.getElementById('form-container');
+    const messageDiv = document.getElementById('message');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+          .then(response => {
+            console.log('Success!', response);
+            formContainer.style.display = 'none'; 
+            messageDiv.style.display = 'block'; 
+          })
+          .catch(error => {
+            console.error('Error!', error.message);
+            // Handle errors (e.g., display an error message)
+          });
+      });
+    </script>
+</body>
+</html
